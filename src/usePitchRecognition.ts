@@ -37,6 +37,10 @@ const applyWindowFunction = (buffer: Float32Array) => {
     return windowedBuffer;
 };
 
+const applyNoiseGate = (spectrum: Float32Array, threshold: number) => {
+    return spectrum.map(amplitude => amplitude > threshold ? amplitude : 0);
+};
+
 const usePitchRecognition = (): Pitch => {
     const [note, setNote] = useState<string>('');
     const [frequency, setFrequency] = useState<number>(0);
@@ -59,10 +63,16 @@ const usePitchRecognition = (): Pitch => {
                 const detectPitch = () => {
                     const buffer = new Float32Array(analyser.fftSize);
                     analyser.getFloatTimeDomainData(buffer);
-                    const spectrum = fourierTransform(buffer);
-                    const peak = Math.max(...spectrum);
-                    const peakIndex = spectrum.indexOf(peak);
+                    const bufferWithWindow = applyWindowFunction(buffer);
+
+                    const spectrum = fourierTransform(bufferWithWindow);
+                    const threshold = 2;
+                    const spectrumWithNoiseGate = applyNoiseGate(spectrum, threshold);
+
+                    const peak = Math.max(...spectrumWithNoiseGate);
+                    const peakIndex = spectrumWithNoiseGate.indexOf(peak);
                     const frequency = audioContext.sampleRate * peakIndex / analyser.fftSize;
+
                     setFrequency(frequency);
                     setNote(frequencyToNote(frequency));
                 }
