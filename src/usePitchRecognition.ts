@@ -25,6 +25,18 @@ const fourierTransform = (buffer: Float32Array) => {
     return spectrum;
 }
 
+const applyWindowFunction = (buffer: Float32Array) => {
+    const n = buffer.length;
+    const windowedBuffer = new Float32Array(n);
+
+    for (let i = 0; i < n; i++) {
+        // Hann window function
+        windowedBuffer[i] = buffer[i] * (0.5 - 0.5 * Math.cos((2 * Math.PI * i) / (n - 1)));
+    }
+
+    return windowedBuffer;
+};
+
 const usePitchRecognition = (): Pitch => {
     const [note, setNote] = useState<string>('');
     const [frequency, setFrequency] = useState<number>(0);
