@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { Pitch } from './types';
 
 const frequencyToNote = (frequency: number) => {
-    const noteStrings = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const noteStrings = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
     const noteNum = 12 * (Math.log(frequency / 440) / Math.log(2));
-    return noteStrings[Math.round(noteNum) % 12] || '';
+    const index = Math.round(noteNum) % 12;
+    return noteStrings[index];
 }
 
 const fourierTransform = (buffer: Float32Array) => {
