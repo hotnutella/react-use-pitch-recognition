@@ -1,0 +1,1 @@
+export { default as usePitchRecognition } from './usePitchRecognition';
