@@ -30,7 +30,7 @@ const usePitchRecognition = (): Pitch => {
 
     const pitch: Pitch = {
         frequency,
-        note: note.toUpperCase(),
+        note,
     };
 
     useEffect(() => {
@@ -42,9 +42,7 @@ const usePitchRecognition = (): Pitch => {
                 const source = audioContext.createMediaStreamSource(stream);
                 const analyser = audioContext.createAnalyser();
                 source.connect(analyser);
-                // Additional setup for pitch detection and frequency to note conversion
-                // Update the note state based on detected pitch
-
+                
                 const detectPitch = () => {
                     const buffer = new Float32Array(analyser.fftSize);
                     analyser.getFloatTimeDomainData(buffer);
@@ -55,7 +53,6 @@ const usePitchRecognition = (): Pitch => {
                     setFrequency(frequency);
                     setNote(frequencyToNote(frequency));
                 }
-                // Detect pitch every 100ms
                 interval = setInterval(detectPitch, 100);
             } catch (error) {
                 console.error('Error accessing the microphone', error);
