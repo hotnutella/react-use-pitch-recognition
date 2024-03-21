@@ -58,9 +58,12 @@ The `usePitchRecognition` hook listens to the microphone's audio input and provi
 * `frequency`: The detected pitch frequency in Hertz (Hz).
 * `note`: The musical note corresponding to the detected frequency.
 
-## Contributing
+## Live Demo
+For a practical demonstration of react-use-pitch-recognition in action, check out our live demo:
 
-Contributions are always welcome! Please read the contributing guidelines first.
+[Fourier Transform Hook Demo](https://hotnutella.github.io/fourier-transform-hook-demo/)
+
+This demo showcases real-time pitch detection and visualization using the hook. Simply allow the demo to access your microphone, and produce some sounds to see the pitch detection in action.
 
 ## License
 
